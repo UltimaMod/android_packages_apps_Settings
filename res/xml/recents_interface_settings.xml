@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2012-2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
+    android:title="@string/recents_settings_title">
+
+    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+        android:key="clear_all_show"
+        android:title="@string/recents_clear_all" 
+        android:summary="@string/recents_clear_all_summary"/>
+                    
+    <ListPreference 
+        android:title="@string/recents_clear_all_position"
+        android:key="clear_all_position"
+        android:summary="%s"
+        android:entries="@array/clear_all_position_entries"
+        android:entryValues="@array/clear_all_position_values"
+        defaultValue="0"
+        android:dependency="clear_all_show"/>
+
+    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference   
+        android:title="@string/recents_rambar"
+        android:summary="@string/recents_rambar_summary"
+        android:key="ram_bar_show"
+        defaultValue="0" />
+
+    <!-- <ListPreference 
+        android:title="@string/ui_rambar_position"
+        android:key="system_pref_rambar_position"
+        android:summary="@string/list_summary"
+        android:entries="@array/clear_all_position_entries"
+        android:entryValues="@array/clear_all_position_values"
+        defaultValue="1"
+        android:dependency="system_pref_rambar"/> -->
+
+    <com.android.settings.colorpicker.ColorPickerPreference
+        android:title="@string/recents_rambar_color_left"
+        android:key="rambar_color_left"
+        android:summary="@string/recents_rambar_color_left_summary"
+        defaultValue="0xffffffff"
+        hexValue="true"
+        alphaSlider="false" />
+
+    <com.android.settings.colorpicker.ColorPickerPreference
+        android:title="@string/recents_rambar_color_right"
+        android:key="rambar_color_right"
+        android:summary="@string/recents_rambar_color_right_summary"
+        defaultValue="0xff888888"
+        hexValue="true"
+        alphaSlider="false" />
+
+</PreferenceScreen>

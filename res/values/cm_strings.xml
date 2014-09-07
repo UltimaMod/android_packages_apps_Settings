@@ -1338,4 +1338,32 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="sd_media_format_button_text">Erase SD card</string>
     <string name="sd_media_format_final_desc">Erase the SD card, deleting all files stored there? You can\'t reverse this action!</string>
     <string name="sd_media_format_gesture_explanation">You need to draw your unlock pattern to confirm that you want to erase the SD card.</string>
+
+    <!-- Color picker dialog -->
+    <string name="cp_select_colour">Select color</string>
+    <string name="cp_press_color_to_apply">Press on color to apply</string>
+    <string name="cp_color_picker_arrow" translatable="false">&#8594;</string>
+    <string name="cp_hexcode_hint">Hex Code</string>
+
+    <!-- Recents Settings -->
+    <!-- Settings main menu entry -->
+    <string name="recents_settings_title">Recents</string>
+
+    <!-- The following are entries under the recents menu -->
+    <string name="recents_screen">Recents Screen</string>
+    <string name="recents_clear_all">Clear all</string>
+    <string name="recents_clear_all_summary">Show the clear all button on the recents screen</string>
+    <string name="recents_clear_all_position">Clear all position</string>
+    <string name="recents_rambar">RAM bar</string>
+    <string name="recents_rambar_summary">Show a RAM bar on the recents screen</string>
+    <string name="recents_rambar_color_left">RAM used</string>
+    <string name="recents_rambar_color_left_summary">Set the color for used RAM</string>
+    <string name="recents_rambar_color_right">RAM free</string>
+    <string name="recents_rambar_color_right_summary">Set the color for free RAM</string>
+    <string name="recents_rambar_position">RAM bar position</string>
+
+    <!-- Generic strings for position naming -->
+    <string name="position_top">Top</string>
+    <string name="position_bottom">Bottom</string>
+  
 </resources>

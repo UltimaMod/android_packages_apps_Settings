@@ -1881,6 +1881,8 @@
 
         <activity android:name=".notificationlight.BatteryLightSettings" />
 
+        <activity android:name=".cyanogenmod.RecentsPanel" />
+
         <activity android:name=".cyanogenmod.StatusBar" />
 
         <activity android:name=".cyanogenmod.NotificationDrawer" />
