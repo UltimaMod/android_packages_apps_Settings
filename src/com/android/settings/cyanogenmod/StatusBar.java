@@ -31,6 +31,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.telephony.MSimTelephonyManager;
 
 import com.android.settings.R;
+import com.android.settings.colorpicker.ColorPickerPreference;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
@@ -43,11 +44,18 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
     private static final String STATUS_BAR_BATTERY_SHOW_PERCENT = "status_bar_battery_show_percent";
     private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
+    private static final String STATUS_BAR_CLOCK_COLOR = "status_bar_clock_color";
+
+    private static final String STATUS_BAR_DOW = "status_bar_dow";
+    private static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
 
     private static final String STATUS_BAR_STYLE_HIDDEN = "4";
     private static final String STATUS_BAR_STYLE_TEXT = "6";
 
     private ListPreference mStatusBarClockStyle;
+    private ColorPickerPreference mStatusBarClockColor;
+    private ListPreference mStatusBarDowStyle;
+    private ListPreference mStatusBarAmPmStyle;
     private ListPreference mStatusBarBattery;
     private SystemSettingCheckBoxPreference mStatusBarBatteryShowPercent;
     private ListPreference mStatusBarCmSignal;
@@ -66,6 +74,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mStatusBarClockStyle = (ListPreference) findPreference(STATUS_BAR_CLOCK_STYLE);
 
+        mStatusBarClockColor = (ColorPickerPreference) findPreference(STATUS_BAR_CLOCK_COLOR);
+        mStatusBarClockColor.setOnPreferenceChangeListener(this);
+
+        mStatusBarDowStyle = (ListPreference) findPreference(STATUS_BAR_DOW);
+
+        mStatusBarAmPmStyle = (ListPreference) findPreference(STATUS_BAR_AM_PM);
+
         mStatusBarBattery = (ListPreference) findPreference(STATUS_BAR_BATTERY);
         mStatusBarBatteryShowPercent =
                 (SystemSettingCheckBoxPreference) findPreference(STATUS_BAR_BATTERY_SHOW_PERCENT);
@@ -79,6 +94,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarClockStyle.setValue(String.valueOf(clockStyle));
         mStatusBarClockStyle.setSummary(mStatusBarClockStyle.getEntry());
         mStatusBarClockStyle.setOnPreferenceChangeListener(this);
+
+        int dowStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_DOW, 2);
+        mStatusBarDowStyle.setValue(String.valueOf(dowStyle));
+        mStatusBarDowStyle.setSummary(mStatusBarDowStyle.getEntry());
+        mStatusBarDowStyle.setOnPreferenceChangeListener(this);
+
+        int amPmStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_AM_PM, 2);
+        mStatusBarAmPmStyle.setValue(String.valueOf(amPmStyle));
+        mStatusBarAmPmStyle.setSummary(mStatusBarAmPmStyle.getEntry());
+        mStatusBarAmPmStyle.setOnPreferenceChangeListener(this);
 
         int batteryStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_BATTERY, 0);
         mStatusBarBattery.setValue(String.valueOf(batteryStyle));
@@ -147,8 +172,23 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_CLOCK, clockStyle);
             mStatusBarClockStyle.setSummary(mStatusBarClockStyle.getEntries()[index]);
             return true;
+        } else if (preference == mStatusBarDowStyle) {
+            int dowStyle = Integer.valueOf((String) newValue);
+            int index = mStatusBarDowStyle.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_DOW, dowStyle);
+            mStatusBarDowStyle.setSummary(mStatusBarDowStyle.getEntries()[index]);
+            return true;
+        } else if (preference == mStatusBarAmPmStyle) {
+            int amPmStyle = Integer.valueOf((String) newValue);
+            int index = mStatusBarAmPmStyle.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_AM_PM, amPmStyle);
+            mStatusBarAmPmStyle.setSummary(mStatusBarAmPmStyle.getEntries()[index]);
+            return true;
+        } else if (preference == mStatusBarClockColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, STATUS_BAR_CLOCK_COLOR, value);
+            return true;
         }
-
         return false;
     }
 

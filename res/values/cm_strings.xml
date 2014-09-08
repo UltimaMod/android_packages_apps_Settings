@@ -978,10 +978,19 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
 
     <!-- Status bar -->
     <string name="status_bar_title">Status bar</string>
+    <string name="status_bar_clock">Clock</string>
     <string name="status_bar_clock_title">Clock style</string>
     <string name="status_bar_clock_style_default">Default</string>
     <string name="status_bar_clock_style_center">Center</string>
     <string name="status_bar_clock_style_hidden">Hidden</string>
+    <string name="status_bar_clock_style_normal">Normal</string>
+    <string name="status_bar_clock_style_small">Small</string>
+    <string name="status_bar_clock_color_title">Clock color</string>
+    <string name="status_bar_clock_color_summary">Change the color of the statusbar clock</string>
+    <string name="status_bar_clock_style_title">Clock style</string>
+    <string name="status_bar_clock_ampm_style_title">AM/PM style</string>
+    <string name="status_bar_clock_dow_style_title">Weekday style</string>
+    <string name="status_bar_battery">Battery</string>
     <string name="status_bar_battery_title">Battery status style</string>
     <string name="status_bar_style_icon_portrait">Icon portrait</string>
     <string name="status_bar_style_icon_landscape">Icon landscape</string>
@@ -1362,8 +1371,9 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="recents_rambar_color_right_summary">Set the color for free RAM</string>
     <string name="recents_rambar_position">RAM bar position</string>
 
-    <!-- Generic strings for position naming -->
+    <!-- Generic strings -->
     <string name="position_top">Top</string>
     <string name="position_bottom">Bottom</string>
-  
+    <string name="misc">Misc</string>
+
 </resources>
