@@ -53,13 +53,20 @@ public class RecentsPanel extends SettingsPreferenceFragment implements OnPrefer
 
         addPreferencesFromResource(R.xml.recents_interface_settings);
 
+        ContentResolver resolver = getActivity().getContentResolver();
+
         mClearAllShow = (SystemSettingCheckBoxPreference) findPreference(CLEAR_ALL_SHOW);
         mClearAllPosition = (ListPreference) findPreference(CLEAR_ALL_POSITION);
+
+        int clearPosition = Settings.System.getInt(resolver, Settings.System.CLEAR_ALL_POSITION, 0);
+        mClearAllPosition.setValue(String.valueOf(clearPosition));
+        mClearAllPosition.setSummary(mClearAllPosition.getEntry());
+        mClearAllPosition.setOnPreferenceChangeListener(this);
         
         mRamBarShow = (SystemSettingCheckBoxPreference) findPreference(RAM_BAR_SHOW);
         mRamBarColorLeft = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_LEFT);
-        mRamBarColorRight = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_RIGHT);
         mRamBarColorLeft.setOnPreferenceChangeListener(this);
+        mRamBarColorRight = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_RIGHT);       
         mRamBarColorRight.setOnPreferenceChangeListener(this);
     }
 
