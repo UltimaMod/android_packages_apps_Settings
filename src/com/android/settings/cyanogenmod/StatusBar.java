@@ -52,6 +52,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_STYLE_HIDDEN = "4";
     private static final String STATUS_BAR_STYLE_TEXT = "6";
 
+    private static final String NETWORK_TRAFFIC_STATE = "network_traffic_meter";
+    private static final String NETWORK_TRAFFIC_ICON = "network_traffic_icon";
+    private static final String NETWORK_TRAFFIC_TEXT = "network_traffic_text";
+    private static final String NETWORK_TRAFFIC_COLOR_UP = "network_traffic_color_up";
+    private static final String NETWORK_TRAFFIC_COLOR_DOWN = "network_traffic_color_down";
+    private static final String NETWORK_TRAFFIC_COLOR_ICON = "network_traffic_color_icon";
+    private static final String NETWORK_TRAFFIC_HIDE = "network_traffic_hide";
+    private static final String NETWORK_TRAFFIC_UNIT = "network_traffic_unit";
+    private static final String NETWORK_TRAFFIC_INTERVAL = "network_traffic_interval";
+
     private ListPreference mStatusBarClockStyle;
     private ColorPickerPreference mStatusBarClockColor;
     private ListPreference mStatusBarDowStyle;
@@ -60,6 +70,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private SystemSettingCheckBoxPreference mStatusBarBatteryShowPercent;
     private ListPreference mStatusBarCmSignal;
     private CheckBoxPreference mStatusBarBrightnessControl;
+
+    private ListPreference mNetworkTrafficState;
+    private ListPreference mNetworkTrafficUnit;
+    private ListPreference mNetworkTrafficInterval;
+    private ColorPickerPreference mNetworkTrafficColorUp;
+    private ColorPickerPreference mNetworkTrafficColorDown;
+    private ColorPickerPreference mNetworkTrafficColorIcon;
 
     private ContentObserver mSettingsObserver;
 
@@ -90,6 +107,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 prefSet.findPreference(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL);
         refreshBrightnessControl();
 
+        mNetworkTrafficState = (ListPreference) findPreference(NETWORK_TRAFFIC_STATE);
+        mNetworkTrafficUnit = (ListPreference) findPreference(NETWORK_TRAFFIC_UNIT);
+        mNetworkTrafficInterval = (ListPreference) findPreference(NETWORK_TRAFFIC_INTERVAL);
+        mNetworkTrafficColorUp = (ColorPickerPreference) findPreference(NETWORK_TRAFFIC_COLOR_UP);
+        mNetworkTrafficColorUp.setOnPreferenceChangeListener(this);
+        mNetworkTrafficColorDown = (ColorPickerPreference) findPreference(NETWORK_TRAFFIC_COLOR_DOWN);
+        mNetworkTrafficColorDown.setOnPreferenceChangeListener(this);
+        mNetworkTrafficColorIcon = (ColorPickerPreference) findPreference(NETWORK_TRAFFIC_COLOR_ICON);
+        mNetworkTrafficColorIcon.setOnPreferenceChangeListener(this);
+
         int clockStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_CLOCK, 1);
         mStatusBarClockStyle.setValue(String.valueOf(clockStyle));
         mStatusBarClockStyle.setSummary(mStatusBarClockStyle.getEntry());
@@ -114,6 +141,21 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarCmSignal.setValue(String.valueOf(signalStyle));
         mStatusBarCmSignal.setSummary(mStatusBarCmSignal.getEntry());
         mStatusBarCmSignal.setOnPreferenceChangeListener(this);
+
+        int trafficState = Settings.System.getInt(resolver, Settings.System.NETWORK_TRAFFIC_STATE, 0);
+        mNetworkTrafficState.setValue(String.valueOf(trafficState));
+        mNetworkTrafficState.setSummary(mNetworkTrafficState.getEntry());
+        mNetworkTrafficState.setOnPreferenceChangeListener(this);
+
+        int trafficUnit = Settings.System.getInt(resolver, Settings.System.NETWORK_TRAFFIC_UNIT, 1);
+        mNetworkTrafficUnit.setValue(String.valueOf(trafficUnit));
+        mNetworkTrafficUnit.setSummary(mNetworkTrafficUnit.getEntry());
+        mNetworkTrafficUnit.setOnPreferenceChangeListener(this);
+
+        int trafficInt = Settings.System.getInt(resolver, Settings.System.NETWORK_TRAFFIC_INTERVAL, 1000);
+        mNetworkTrafficInterval.setValue(String.valueOf(trafficInt));
+        mNetworkTrafficInterval.setSummary(mNetworkTrafficInterval.getEntry());
+        mNetworkTrafficInterval.setOnPreferenceChangeListener(this);
 
         if (Utils.isWifiOnly(getActivity())
                 || (MSimTelephonyManager.getDefault().isMultiSimEnabled())) {
@@ -188,7 +230,37 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int value = (Integer) newValue;
             Settings.System.putInt(resolver, STATUS_BAR_CLOCK_COLOR, value);
             return true;
-        }
+        } else if (preference == mNetworkTrafficState) {
+            int networkState = Integer.valueOf((String) newValue);
+            int index = mNetworkTrafficState.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.NETWORK_TRAFFIC_STATE, networkState);
+            mNetworkTrafficState.setSummary(mNetworkTrafficState.getEntries()[index]);
+            return true;
+        } else if (preference == mNetworkTrafficUnit) {
+            int networkUnit = Integer.valueOf((String) newValue);
+            int index = mNetworkTrafficUnit.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.NETWORK_TRAFFIC_UNIT, networkUnit);
+            mNetworkTrafficUnit.setSummary(mNetworkTrafficUnit.getEntries()[index]);
+            return true;
+        } else if (preference == mNetworkTrafficInterval) {
+            int networkInterval = Integer.valueOf((String) newValue);
+            int index = mNetworkTrafficInterval.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.NETWORK_TRAFFIC_INTERVAL, networkInterval);
+            mNetworkTrafficInterval.setSummary(mNetworkTrafficInterval.getEntries()[index]);
+            return true;
+        } else if (preference == mNetworkTrafficColorUp){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, NETWORK_TRAFFIC_COLOR_UP, value);
+            return true;
+        } else if (preference == mNetworkTrafficColorDown){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, NETWORK_TRAFFIC_COLOR_DOWN, value);
+            return true;
+        } else if (preference == mNetworkTrafficColorIcon){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, NETWORK_TRAFFIC_COLOR_ICON, value);
+            return true;
+        } 
         return false;
     }
 
