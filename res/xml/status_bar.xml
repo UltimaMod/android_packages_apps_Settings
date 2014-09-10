@@ -18,7 +18,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/status_bar_title">
 
-    <PreferenceScreen android:title="@string/status_bar_clock" />
+    <PreferenceScreen android:title="@string/status_bar_clock">
 
 	    <ListPreference
 	        android:key="status_bar_clock"
@@ -51,7 +51,7 @@
 
     </PreferenceScreen>
 
-    <PreferenceScreen android:title="@string/status_bar_battery" />
+    <PreferenceScreen android:title="@string/status_bar_battery">
 
 	    <ListPreference
 	        android:key="status_bar_battery"
@@ -68,7 +68,7 @@
 
     </PreferenceScreen>
 
-    <PreferenceScreen android:title="@string/network_traffic" />
+    <PreferenceScreen android:title="@string/network_traffic">
 
 	    <ListPreference
 	        android:key="network_traffic_meter"
@@ -131,6 +131,55 @@
 	        hexValue="true" />
 
     </PreferenceScreen>
+
+    <PreferenceScreen android:title="@string/recents_settings_title">
+
+	    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+	        android:key="clear_all_show"
+	        android:title="@string/recents_clear_all" 
+	        android:summary="@string/recents_clear_all_summary"/>
+	                    
+	    <ListPreference 
+	        android:title="@string/recents_clear_all_position"
+	        android:key="clear_all_position"
+	        android:summary="%s"
+	        android:entries="@array/clear_all_position_entries"
+	        android:entryValues="@array/clear_all_position_values"
+	        defaultValue="0"
+	        android:dependency="clear_all_show"/>
+
+	    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference   
+	        android:title="@string/recents_rambar"
+	        android:summary="@string/recents_rambar_summary"
+	        android:key="ram_bar_show"
+	        defaultValue="0" />
+
+	    <!-- <ListPreference 
+	        android:title="@string/ui_rambar_position"
+	        android:key="system_pref_rambar_position"
+	        android:summary="@string/list_summary"
+	        android:entries="@array/clear_all_position_entries"
+	        android:entryValues="@array/clear_all_position_values"
+	        defaultValue="1"
+	        android:dependency="system_pref_rambar"/> -->
+
+	    <com.android.settings.colorpicker.ColorPickerPreference
+	        android:title="@string/recents_rambar_color_left"
+	        android:key="rambar_color_left"
+	        android:summary="@string/recents_rambar_color_left_summary"
+	        defaultValue="0xffffffff"
+	        hexValue="true"
+	        alphaSlider="false" />
+
+	    <com.android.settings.colorpicker.ColorPickerPreference
+	        android:title="@string/recents_rambar_color_right"
+	        android:key="rambar_color_right"
+	        android:summary="@string/recents_rambar_color_right_summary"
+	        defaultValue="0xff888888"
+	        hexValue="true"
+	        alphaSlider="false" />
+
+	</PreferenceScreen>
 
     <ListPreference
         android:key="status_bar_signal"

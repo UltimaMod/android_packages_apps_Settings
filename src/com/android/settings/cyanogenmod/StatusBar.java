@@ -62,6 +62,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String NETWORK_TRAFFIC_UNIT = "network_traffic_unit";
     private static final String NETWORK_TRAFFIC_INTERVAL = "network_traffic_interval";
 
+    private static final String CLEAR_ALL_SHOW = "clear_all_show";
+    private static final String CLEAR_ALL_POSITION = "clear_all_position";
+
+    private static final String RAM_BAR_SHOW = "ram_bar_show";
+    private static final String RAM_BAR_COLOR_LEFT = "rambar_color_left";
+    private static final String RAM_BAR_COLOR_RIGHT = "rambar_color_right";
+
     private ListPreference mStatusBarClockStyle;
     private ColorPickerPreference mStatusBarClockColor;
     private ListPreference mStatusBarDowStyle;
@@ -77,6 +84,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private ColorPickerPreference mNetworkTrafficColorUp;
     private ColorPickerPreference mNetworkTrafficColorDown;
     private ColorPickerPreference mNetworkTrafficColorIcon;
+
+    private CheckBoxPreference mClearAllShow;
+    private ListPreference mClearAllPosition;
+
+    private CheckBoxPreference mRamBarShow;
+    private ColorPickerPreference mRamBarColorLeft;
+    private ColorPickerPreference mRamBarColorRight;
 
     private ContentObserver mSettingsObserver;
 
@@ -117,6 +131,15 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mNetworkTrafficColorIcon = (ColorPickerPreference) findPreference(NETWORK_TRAFFIC_COLOR_ICON);
         mNetworkTrafficColorIcon.setOnPreferenceChangeListener(this);
 
+        mClearAllShow = (SystemSettingCheckBoxPreference) findPreference(CLEAR_ALL_SHOW);
+        mClearAllPosition = (ListPreference) findPreference(CLEAR_ALL_POSITION);
+
+        mRamBarShow = (SystemSettingCheckBoxPreference) findPreference(RAM_BAR_SHOW);
+        mRamBarColorLeft = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_LEFT);
+        mRamBarColorLeft.setOnPreferenceChangeListener(this);
+        mRamBarColorRight = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_RIGHT);       
+        mRamBarColorRight.setOnPreferenceChangeListener(this);
+
         int clockStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_CLOCK, 1);
         mStatusBarClockStyle.setValue(String.valueOf(clockStyle));
         mStatusBarClockStyle.setSummary(mStatusBarClockStyle.getEntry());
@@ -156,6 +179,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mNetworkTrafficInterval.setValue(String.valueOf(trafficInt));
         mNetworkTrafficInterval.setSummary(mNetworkTrafficInterval.getEntry());
         mNetworkTrafficInterval.setOnPreferenceChangeListener(this);
+
+        int clearPosition = Settings.System.getInt(resolver, Settings.System.CLEAR_ALL_POSITION, 0);
+        mClearAllPosition.setValue(String.valueOf(clearPosition));
+        mClearAllPosition.setSummary(mClearAllPosition.getEntry());
+        mClearAllPosition.setOnPreferenceChangeListener(this);
 
         if (Utils.isWifiOnly(getActivity())
                 || (MSimTelephonyManager.getDefault().isMultiSimEnabled())) {
@@ -260,7 +288,21 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int value = (Integer) newValue;
             Settings.System.putInt(resolver, NETWORK_TRAFFIC_COLOR_ICON, value);
             return true;
-        } 
+        } else if (preference == mClearAllPosition) {
+            int position = Integer.valueOf((String) newValue);
+            int index = mClearAllPosition.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.CLEAR_ALL_POSITION, position);
+            mClearAllPosition.setSummary(mClearAllPosition.getEntries()[index]);
+            return true;
+        } else if (preference == mRamBarColorLeft){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, RAM_BAR_COLOR_LEFT, value);
+            return true;
+        } else if (preference == mRamBarColorRight){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, RAM_BAR_COLOR_RIGHT, value);
+            return true;
+        }
         return false;
     }
 
