@@ -57,6 +57,11 @@
             android:fragment="com.android.settings.cyanogenmod.ChangeLog" >
         </PreferenceScreen>
 
+        <PreferenceScreen android:key="changelog_um"
+            android:title="@string/changelog_title_um"
+            android:fragment="com.android.settings.ultimamod.ChangeLog" >
+        </PreferenceScreen>
+
         <!-- Contributors cloud -->
         <PreferenceScreen android:key="contributor_cloud"
             android:title="@string/contributor_cloud_title"
