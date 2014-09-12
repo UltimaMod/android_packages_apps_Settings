@@ -1406,4 +1406,20 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
      <string name="network_traffic_color_icon">Icon color</string>
      <string name="network_traffic_color_icon_summary">Set the color of the icon</string>
 
+     <!-- ROM Branding-->
+    <string name="rom_information">ROM information</string>
+    <string name="rom_cat">ROM</string>
+    <string name="rom_web_cat">Web</string>
+    <string name="rom_name">Name</string>
+    <string name="rom_version">Version</string>
+    <string name="rom_codename">Codename</string>
+    <string name="rom_default">Unknown</string>
+    <string name="rom_website">Website</string>
+    <string name="rom_website_summary">http://www.ultimarom.com</string>
+    <string name="rom_themed_apps">Themed apps</string>
+    <string name="rom_themed_apps_summary">http://ultimarom.com/themed-apps/browse/</string>
+    <string name="rom_licence">Licence</string>
+    <string name="rom_licence_summary">"This ROM is open source and licenced under the GPLv2 licence.\n\nIf you would like to use any part of it, you do not need to ask, however give due credit to the original author."</string>
+    
+
 </resources>

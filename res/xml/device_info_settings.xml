@@ -68,6 +68,64 @@
             android:fragment="com.android.settings.cyanogenmod.ContributorsCloud" >
         </PreferenceScreen>
 
+        <PreferenceScreen 
+            android:title="@string/rom_information" 
+            android:key="rom_information">
+        <Preference 
+           android:layout="@layout/rom_info_banner" 
+           android:selectable="false" 
+           android:key="rom_info_banner" />
+        <PreferenceCategory 
+           android:title="@string/rom_cat" 
+           android:key="rom_info_category" />
+        <Preference 
+           android:title="@string/rom_name" 
+           android:selectable="false" 
+           android:key="rom_name" 
+           android:summary="@string/rom_default" 
+           style="?android:preferenceInformationStyle" />
+        <Preference 
+           android:title="@string/rom_codename" 
+           android:selectable="false" 
+           android:key="rom_codename" 
+           android:summary="@string/rom_default" 
+           style="?android:preferenceInformationStyle" />
+        <Preference 
+           android:title="@string/rom_version" 
+           android:selectable="false" 
+           android:key="rom_version" 
+           android:summary="@string/rom_default" 
+           style="?android:preferenceInformationStyle" />
+        <PreferenceCategory 
+           android:title="@string/rom_web_cat" 
+           android:key="rom_web_category" />
+        <PreferenceScreen 
+           android:title="@string/rom_website" 
+           android:key="rom_website" 
+           android:summary="@string/rom_website_summary">
+           <intent 
+               android:action="android.intent.action.VIEW" 
+               android:data="http://www.ultimarom.com" />
+        </PreferenceScreen>
+        <PreferenceScreen 
+           android:title="@string/rom_themed_apps" 
+           android:key="rom_themed_apps" 
+           android:summary="@string/rom_themed_apps_summary">
+            <intent 
+               android:action="android.intent.action.VIEW" 
+               android:data="http://ultimarom.com/themed-apps/browse/" />
+        </PreferenceScreen>
+        <PreferenceCategory 
+           android:title="@string/rom_licence" 
+           android:key="rom_info_licence" />
+        <Preference 
+           android:title="@string/rom_licence" 
+           android:selectable="false" 
+           android:key="rom_licence" 
+           android:summary="@string/rom_licence_summary" 
+           style="?android:preferenceInformationStyle" />
+    </PreferenceScreen>
+
         <!-- Legal Information -->
         <PreferenceScreen
                 android:key="container"

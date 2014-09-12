@@ -78,6 +78,10 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
     private static final String KEY_CM_UPDATES = "cm_updates";
     private static final String KEY_STATUS = "status_info";
 
+    private static final String KEY_ROM_VERSION = "rom_version";
+    private static final String KEY_ROM_CODENAME = "rom_codename";
+    private static final String KEY_ROM_ROMNAME = "rom_name";
+
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
     long[] mHits = new long[3];
     int mDevHitCountdown;
@@ -109,6 +113,10 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         setValueSummary(KEY_MOD_VERSION, "ro.cm.display.version");
         findPreference(KEY_MOD_VERSION).setEnabled(true);
         setValueSummary(KEY_MOD_BUILD_DATE, "ro.build.date");
+
+        setValueSummary(KEY_ROM_VERSION, "ro.ua.version");
+        setValueSummary(KEY_ROM_ROMNAME, "ro.ua.romname");
+        setValueSummary(KEY_ROM_CODENAME, "ro.ua.codename");
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);
