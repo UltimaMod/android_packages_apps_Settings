@@ -56,19 +56,14 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_STYLE_PORTRAIT = "0";
 
     private static final String NETWORK_TRAFFIC_STATE = "network_traffic_meter";
-    private static final String NETWORK_TRAFFIC_ICON = "network_traffic_icon";
-    private static final String NETWORK_TRAFFIC_TEXT = "network_traffic_text";
     private static final String NETWORK_TRAFFIC_COLOR_UP = "network_traffic_color_up";
     private static final String NETWORK_TRAFFIC_COLOR_DOWN = "network_traffic_color_down";
     private static final String NETWORK_TRAFFIC_COLOR_ICON = "network_traffic_color_icon";
-    private static final String NETWORK_TRAFFIC_HIDE = "network_traffic_hide";
     private static final String NETWORK_TRAFFIC_UNIT = "network_traffic_unit";
     private static final String NETWORK_TRAFFIC_INTERVAL = "network_traffic_interval";
 
-    private static final String CLEAR_ALL_SHOW = "clear_all_show";
     private static final String CLEAR_ALL_POSITION = "clear_all_position";
 
-    private static final String RAM_BAR_SHOW = "ram_bar_show";
     private static final String RAM_BAR_COLOR_LEFT = "rambar_color_left";
     private static final String RAM_BAR_COLOR_RIGHT = "rambar_color_right";
     
@@ -102,10 +97,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private ColorPickerPreference mNetworkTrafficColorDown;
     private ColorPickerPreference mNetworkTrafficColorIcon;
 
-    private CheckBoxPreference mClearAllShow;
     private ListPreference mClearAllPosition;
 
-    private CheckBoxPreference mRamBarShow;
     private ColorPickerPreference mRamBarColorLeft;
     private ColorPickerPreference mRamBarColorRight;
     
@@ -161,10 +154,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mNetworkTrafficColorIcon = (ColorPickerPreference) findPreference(NETWORK_TRAFFIC_COLOR_ICON);
         mNetworkTrafficColorIcon.setOnPreferenceChangeListener(this);
 
-        mClearAllShow = (SystemSettingCheckBoxPreference) findPreference(CLEAR_ALL_SHOW);
         mClearAllPosition = (ListPreference) findPreference(CLEAR_ALL_POSITION);
 
-        mRamBarShow = (SystemSettingCheckBoxPreference) findPreference(RAM_BAR_SHOW);
         mRamBarColorLeft = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_LEFT);
         mRamBarColorLeft.setOnPreferenceChangeListener(this);
         mRamBarColorRight = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_RIGHT);       
