@@ -51,6 +51,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
     private static final String STATUS_BAR_STYLE_HIDDEN = "4";
     private static final String STATUS_BAR_STYLE_TEXT = "6";
+    
+    private static final String STATUS_BAR_STYLE_LANDSCAPE = "5";
+    private static final String STATUS_BAR_STYLE_PORTRAIT = "0";
 
     private static final String NETWORK_TRAFFIC_STATE = "network_traffic_meter";
     private static final String NETWORK_TRAFFIC_ICON = "network_traffic_icon";
@@ -68,6 +71,20 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String RAM_BAR_SHOW = "ram_bar_show";
     private static final String RAM_BAR_COLOR_LEFT = "rambar_color_left";
     private static final String RAM_BAR_COLOR_RIGHT = "rambar_color_right";
+    
+    private static final String BATTERY_COLOR = "status_bar_battery_color";
+    private static final String BATTERY_COLOR_LOW = "status_bar_battery_color_low";
+    private static final String BATTERY_COLOR_CRIT = "status_bar_battery_color_crit";
+    private static final String BATTERY_TEXT_COLOR_LOW = "status_bar_battery_text_color_low";
+    private static final String BATTERY_TEXT_COLOR = "status_bar_battery_text_color";
+    private static final String BATTERY_CHARGE_COLOR = "status_bar_battery_charge_color";
+    private static final String BATTERY_BACK_COLOR = "status_bar_battery_back_color";
+    private static final String BATTERY_BOLT_COLOR = "status_bar_battery_bolt_color";
+    
+    private static final String USE_BATTERY_TEXT_COLOR_LOW = "use_battery_text_color_low";
+    
+    private static final String BATTERY_LEVEL_CRIT = "status_bar_battery_level_crit";
+    private static final String BATTERY_LEVEL_LOW = "status_bar_battery_level_low";
 
     private ListPreference mStatusBarClockStyle;
     private ColorPickerPreference mStatusBarClockColor;
@@ -91,6 +108,19 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mRamBarShow;
     private ColorPickerPreference mRamBarColorLeft;
     private ColorPickerPreference mRamBarColorRight;
+    
+    private ColorPickerPreference mBatteryColor;
+    private ColorPickerPreference mBatteryColorLow;
+    private ColorPickerPreference mBatteryColorCrit;
+    private ColorPickerPreference mBatteryTextColor;
+    private ColorPickerPreference mBatteryTextColorLow;
+    private ColorPickerPreference mBatteryChargeColor;
+    private ColorPickerPreference mBatteryBackColor;
+    private ColorPickerPreference mBatteryBoltColor;
+    private SystemSettingCheckBoxPreference mShowBatteryTextLow;
+    
+    private ListPreference mBatteryLevelCrit;
+    private ListPreference mBatteryLevelLow;
 
     private ContentObserver mSettingsObserver;
 
@@ -139,6 +169,29 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mRamBarColorLeft.setOnPreferenceChangeListener(this);
         mRamBarColorRight = (ColorPickerPreference) findPreference(RAM_BAR_COLOR_RIGHT);       
         mRamBarColorRight.setOnPreferenceChangeListener(this);
+        
+        mBatteryColor = (ColorPickerPreference) findPreference(BATTERY_COLOR);
+        mBatteryColor.setOnPreferenceChangeListener(this);
+        mBatteryColorLow = (ColorPickerPreference) findPreference(BATTERY_COLOR_LOW);       
+        mBatteryColorLow.setOnPreferenceChangeListener(this);
+        mBatteryColorCrit = (ColorPickerPreference) findPreference(BATTERY_COLOR_CRIT);
+        mBatteryColorCrit.setOnPreferenceChangeListener(this);
+        mBatteryTextColor = (ColorPickerPreference) findPreference(BATTERY_TEXT_COLOR);       
+        mBatteryTextColor.setOnPreferenceChangeListener(this);
+        mBatteryTextColorLow = (ColorPickerPreference) findPreference(BATTERY_TEXT_COLOR_LOW);
+        mBatteryTextColorLow.setOnPreferenceChangeListener(this);
+        mBatteryChargeColor = (ColorPickerPreference) findPreference(BATTERY_CHARGE_COLOR);       
+        mBatteryChargeColor.setOnPreferenceChangeListener(this);
+        mBatteryBackColor = (ColorPickerPreference) findPreference(BATTERY_BACK_COLOR);
+        mBatteryBackColor.setOnPreferenceChangeListener(this);
+        mBatteryBoltColor = (ColorPickerPreference) findPreference(BATTERY_BOLT_COLOR);       
+        mBatteryBoltColor.setOnPreferenceChangeListener(this);
+        
+        mBatteryLevelCrit = (ListPreference) findPreference(BATTERY_LEVEL_CRIT);
+        mBatteryLevelLow = (ListPreference) findPreference(BATTERY_LEVEL_LOW);
+        
+        mShowBatteryTextLow =
+                (SystemSettingCheckBoxPreference) findPreference(USE_BATTERY_TEXT_COLOR_LOW);
 
         int clockStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_CLOCK, 1);
         mStatusBarClockStyle.setValue(String.valueOf(clockStyle));
@@ -184,6 +237,16 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mClearAllPosition.setValue(String.valueOf(clearPosition));
         mClearAllPosition.setSummary(mClearAllPosition.getEntry());
         mClearAllPosition.setOnPreferenceChangeListener(this);
+        
+        int batteryCrit = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_BATTERY_LEVEL_CRIT, 4);
+        mBatteryLevelCrit.setValue(String.valueOf(batteryCrit));
+        mBatteryLevelCrit.setSummary(mBatteryLevelCrit.getEntry());
+        mBatteryLevelCrit.setOnPreferenceChangeListener(this);
+        
+        int batteryLow = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_BATTERY_LEVEL_LOW, 15);
+        mBatteryLevelLow.setValue(String.valueOf(batteryLow));
+        mBatteryLevelLow.setSummary(mBatteryLevelLow.getEntry());
+        mBatteryLevelLow.setOnPreferenceChangeListener(this);
 
         if (Utils.isWifiOnly(getActivity())
                 || (MSimTelephonyManager.getDefault().isMultiSimEnabled())) {
@@ -191,11 +254,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         }
 
         enableStatusBarBatteryDependents(mStatusBarBattery.getValue());
+        enableBatteryTextOptions(mStatusBarBattery.getValue());
 
         mSettingsObserver = new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange, Uri uri) {
                 refreshBrightnessControl();
+                enableBatteryTextOptions(mStatusBarBattery.getValue());
             }
 
             @Override
@@ -210,6 +275,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         super.onResume();
         getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS_MODE),
+                true, mSettingsObserver);
+        getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.STATUS_BAR_BATTERY),
                 true, mSettingsObserver);
     }
 
@@ -302,6 +370,58 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int value = (Integer) newValue;
             Settings.System.putInt(resolver, RAM_BAR_COLOR_RIGHT, value);
             return true;
+        } else if (preference == mBatteryColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_COLOR, value);
+            return true;
+        } else if (preference == mBatteryColorLow){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_COLOR_LOW, value);
+            return true;
+        } else if (preference == mBatteryColorCrit){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_COLOR_CRIT, value);
+            return true;
+        } else if (preference == mBatteryTextColorLow){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_TEXT_COLOR_LOW, value);
+            return true;
+        } else if (preference == mBatteryTextColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_TEXT_COLOR, value);
+            return true;
+        } else if (preference == mBatteryChargeColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_CHARGE_COLOR, value);
+            return true;
+        } else if (preference == mBatteryBackColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_BACK_COLOR, value);
+            return true;
+        } else if (preference == mBatteryBoltColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_BOLT_COLOR, value);
+            return true;
+        } else if (preference == mBatteryTextColor){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_TEXT_COLOR, value);
+            return true;
+        } else if (preference == mBatteryTextColorLow){
+            int value = (Integer) newValue;
+            Settings.System.putInt(resolver, BATTERY_TEXT_COLOR_LOW, value);
+            return true;
+        } else if (preference == mBatteryLevelCrit) {
+            int level = Integer.valueOf((String) newValue);
+            int index = mBatteryLevelCrit.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BATTERY_LEVEL_CRIT, level);
+            mBatteryLevelCrit.setSummary(mBatteryLevelCrit.getEntries()[index]);
+            return true;
+        } else if (preference == mBatteryLevelLow) {
+            int level = Integer.valueOf((String) newValue);
+            int index = mBatteryLevelLow.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BATTERY_LEVEL_LOW, level);
+            mBatteryLevelLow.setSummary(mBatteryLevelLow.getEntries()[index]);
+            return true;
         }
         return false;
     }
@@ -324,5 +444,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         boolean enabled = !(value.equals(STATUS_BAR_STYLE_TEXT)
                 || value.equals(STATUS_BAR_STYLE_HIDDEN));
         mStatusBarBatteryShowPercent.setEnabled(enabled);
+    }
+    
+    private void enableBatteryTextOptions(String value) { 
+        boolean enabled = (value.equals(STATUS_BAR_STYLE_LANDSCAPE)
+                || value.equals(STATUS_BAR_STYLE_PORTRAIT));
+        mBatteryTextColorLow.setEnabled(enabled);
+        mShowBatteryTextLow.setEnabled(enabled);
     }
 }

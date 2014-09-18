@@ -1421,5 +1421,58 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="rom_licence">Licence</string>
     <string name="rom_licence_summary">"This ROM is open source and licenced under the GPLv2 licence.\n\nIf you would like to use any part of it, you do not need to ask, however give due credit to the original author."</string>
     
+    <!-- Battery settings -->
+    <string name="battery_percent">Battery percent</string>
+    <string name="battery_style">Battery style</string>
+    <string name="battery_colors">Battery colors</string>
+    <string name="battery_colors_summary">Change various settings for the battery colors</string>
+    <string name="battery_color">Battery color</string>
+    <string name="battery_color_summary">Choose the color of the battery icon</string>
+    <string name="battery_color_low">Low battery color</string>
+    <string name="battery_color_low_summary">Choose the color of the battery when it low</string>
+    <string name="battery_color_crit">Critical battery color</string>
+    <string name="battery_color_crit_summary">Choose the color of the battery when it critical</string>
+    <string name="battery_back_color">Battery Back Colour</string>
+    <string name="battery_back_color_summary">Choose the color of the battery background</string>
+    <string name="battery_charge_color">Charging Colour</string>
+    <string name="battery_charge_color_summary">Choose the color for charging</string>
+    <string name="battery_bolt_color">Bolt Colour</string>
+    <string name="battery_bolt_color_summary">Choose the color for charging bolt</string>
+    
+    <string name="battery_text_color">Battery percent color</string>
+    <string name="battery_text_color_summary">Choose the color for the percentage color</string>
+    <string name="battery_text_color_low">Battery percent low color</string>
+    <string name="battery_text_color_low_summary">Choose the color for the percentage color when the battery level is 40% or less</string>
+    <string name="use_battery_text_color_low">Enable Battery percent low color</string>
+    
+    <string name="battery_levels">Battery levels</string>
+    <string name="battery_levels_summary">Change the level at which the battery reports it is low, or critical</string>
+    <string name="battery_level_crit">Battery level critical</string>
+    <string name="battery_level_crit_summary">The level at which the battery colour changes to critical</string>
+    <string name="battery_level_low">Battery level critical</string>
+    <string name="battery_level_low_summary">The level at which the battery colour changes to critical</string>
+    
+    <string name="four_pc">4 percent</string>
+    <string name="five_pc">5 percent</string>
+    <string name="six_pc">6 percent</string>
+    <string name="seven_pc">7 percent</string>
+    <string name="eight_pc">8 percent</string>
+    <string name="nine_pc">9 percent</string>
+    <string name="ten_pc">10 percent</string>
+    <string name="eleven_pc">11 percent</string>
+    <string name="twelve_pc">12 percent</string>
+    <string name="thirteen_pc">13 percent</string>
+    <string name="fourteen_pc">14 percent</string>
+    <string name="fifteen_pc">15 percent</string>
+    <string name="sixteen_pc">16 percent</string>
+    <string name="seventeen_pc">17 percent</string>
+    <string name="eighteen_pc">18 percent</string>
+    <string name="nineteen_pc">19 percent</string>
+    <string name="twenty_pc">20 percent</string>
+    <string name="twenty_one_pc">21 percent</string>
+    <string name="twenty_two_pc">22 percent</string>
+    <string name="twenty_three_pc">23 percent</string>
+    <string name="twenty_four_pc">24 percent</string>
+    <string name="twenty_give_pc">25 percent</string>
 
 </resources>
