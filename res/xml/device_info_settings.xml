@@ -51,6 +51,15 @@
                     android:targetClass="com.cyanogenmod.updater.UpdatesSettings" />
         </PreferenceScreen>
 
+        <!-- UltimaMod updates -->
+        <PreferenceScreen android:key="um_updates"
+                android:title="@string/umupdate_settings_title" 
+                android:summary="@string/cmupdate_settings_summary">
+            <intent android:action="android.intent.action.MAIN"
+                    android:targetPackage="com.ota.updates"
+                    android:targetClass="com.ota.updates.activities.MainActivity" />
+        </PreferenceScreen>
+
         <!-- Change Log -->
         <PreferenceScreen android:key="changelog"
             android:title="@string/changelog_title"

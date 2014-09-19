@@ -1478,4 +1478,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="twenty_four_pc">24 percent</string>
     <string name="twenty_give_pc">25 percent</string>
 
+    <!-- CM Updater -->
+    <string name="umupdate_settings_title">UltimaMod updates</string>
+
 </resources>
