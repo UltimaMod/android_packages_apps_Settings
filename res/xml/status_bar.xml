@@ -242,7 +242,8 @@
 	    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
 	        android:key="clear_all_show"
 	        android:title="@string/recents_clear_all" 
-	        android:summary="@string/recents_clear_all_summary"/>
+	        android:summary="@string/recents_clear_all_summary"
+	        defaultValue="1" />
 	                    
 	    <ListPreference 
 	        android:title="@string/recents_clear_all_position"
