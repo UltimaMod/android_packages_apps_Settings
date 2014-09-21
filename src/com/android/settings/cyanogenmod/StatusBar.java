@@ -81,6 +81,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String BATTERY_LEVEL_CRIT = "status_bar_battery_level_crit";
     private static final String BATTERY_LEVEL_LOW = "status_bar_battery_level_low";
 
+    private static final String BATTERY_FONT = "status_bar_battery_font";
+
     private ListPreference mStatusBarClockStyle;
     private ColorPickerPreference mStatusBarClockColor;
     private ListPreference mStatusBarDowStyle;
@@ -114,6 +116,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     
     private ListPreference mBatteryLevelCrit;
     private ListPreference mBatteryLevelLow;
+
+    private ListPreference mBatteryFont;
 
     private ContentObserver mSettingsObserver;
 
@@ -180,6 +184,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         
         mBatteryLevelCrit = (ListPreference) findPreference(BATTERY_LEVEL_CRIT);
         mBatteryLevelLow = (ListPreference) findPreference(BATTERY_LEVEL_LOW);
+
+        mBatteryFont = (ListPreference) findPreference(BATTERY_FONT);
         
         mShowBatteryTextLow =
                 (SystemSettingCheckBoxPreference) findPreference(USE_BATTERY_TEXT_COLOR_LOW);
@@ -238,6 +244,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mBatteryLevelLow.setValue(String.valueOf(batteryLow));
         mBatteryLevelLow.setSummary(mBatteryLevelLow.getEntry());
         mBatteryLevelLow.setOnPreferenceChangeListener(this);
+
+        int batteryFont = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_BATTERY_FONT, 1);
+        mBatteryFont.setValue(String.valueOf(batteryFont));
+        mBatteryFont.setSummary(mBatteryFont.getEntry());
+        mBatteryFont.setOnPreferenceChangeListener(this);
 
         if (Utils.isWifiOnly(getActivity())
                 || (MSimTelephonyManager.getDefault().isMultiSimEnabled())) {
@@ -412,6 +423,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int index = mBatteryLevelLow.findIndexOfValue((String) newValue);
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BATTERY_LEVEL_LOW, level);
             mBatteryLevelLow.setSummary(mBatteryLevelLow.getEntries()[index]);
+            return true;
+        } else if (preference == mBatteryFont) {
+            int font = Integer.valueOf((String) newValue);
+            int index = mBatteryFont.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BATTERY_FONT, font);
+            mBatteryFont.setSummary(mBatteryFont.getEntries()[index]);
             return true;
         }
         return false;

@@ -1454,6 +1454,11 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="battery_level_crit_summary">The level at which the battery colour changes to critical</string>
     <string name="battery_level_low">Battery level critical</string>
     <string name="battery_level_low_summary">The level at which the battery colour changes to critical</string>
+
+    <string name="battery_font_style">Battery font style</string>
+    <string name="font_normal">Normal</string>
+    <string name="font_condensed">Condensed</string>
+    <string name="font_bold">Bold</string>
     
     <string name="four_pc">4 percent</string>
     <string name="five_pc">5 percent</string>
