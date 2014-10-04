@@ -1162,7 +1162,7 @@
         <!-- Memory is critical. -->
         <item>critical</item>
     </string-array>
-
+    
     <string-array name="screen_color_setting">
         <item>Standard</item>
         <item>Vivid</item>
@@ -1193,5 +1193,4 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-
 </resources>
